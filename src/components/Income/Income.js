@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../context/globalcontext';
 import Form from '../Form/Form';
 
 export default function Income() {
-    const { addIncome } = useGlobalContext()
+    const { addIncome, income, getIncome } = useGlobalContext()
     return (
         <IncomeStyled>
             <InnerLayout>

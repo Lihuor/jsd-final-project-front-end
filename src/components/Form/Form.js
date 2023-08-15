@@ -3,6 +3,8 @@ import { styled } from 'styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useGlobalContext } from '../../context/globalcontext'
+import Button from '../Button/Button'
+import { plus } from '../../utils/icons/icons'
 
 export default function Form() {
     const {addIncome} = useGlobalContext()
@@ -70,7 +72,14 @@ export default function Form() {
             <textarea name='description' value={description} id='description' cols="30" rows="4" onChange={handleInput('description')} placeholder='Description'></textarea>
         </div>
         <div className='submit-btn'>
-            <button>Add Income</button>
+            <Button 
+            name={"Add Income"}
+            icon={plus}
+            bPad={'.8rem 1.6rem'}
+            bRad={'30px'}
+            bg={'var(--color-accent)'}
+            color={'#fff'}
+            />
         </div>
     </Formstyled>
   )
