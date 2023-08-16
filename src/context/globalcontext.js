@@ -12,6 +12,7 @@ export const GlobalProvider = ({ children }) => {
     const [expense, setExpense] = useState([]);
     const [error, setError] = useState(null);
 
+    // Calculate income
     const addIncome = async (income) => {
         try {
             const response = await axios.post(`${BASE_URL}AddIncome`, income);
@@ -24,6 +25,7 @@ export const GlobalProvider = ({ children }) => {
                 setError("An error occurred while processing your request.");
             }
         }
+        getIncome()
     };
     
     const getIncome = async () => {
@@ -32,12 +34,71 @@ export const GlobalProvider = ({ children }) => {
         console.log(response.data);
     }
 
+    const deleteIncome = async (id) => {
+        const res = await axios.delete(`${BASE_URL}deleteIncome/${id}`)
+        getIncome()
+    }
+
+    const totalIncome = () => {
+        let totalIncome = 0;
+        income.forEach((income) => {
+            totalIncome = totalIncome += income.amount
+        })
+        return totalIncome;
+    }
+
+    totalIncome();
+    console.log(totalIncome());
+
+    // Calculate Expense
+    const addExpense = async (expense) => {
+        try {
+            const response = await axios.post(`${BASE_URL}AddExpense`, expense);
+            // Handle the successful response if needed
+
+        } catch (err) {
+            if (err.response) {
+                setError(err.response.data.message);
+            } else {
+                setError("An error occurred while processing your request.");
+            }
+        }
+        getExpense()
+    };
+    
+    const getExpense = async () => {
+        const response = await axios.get(`${BASE_URL}getExpense`)
+        setExpense(response.data);
+        console.log(response.data);
+    }
+
+    const deleteExpense = async (id) => {
+        const res = await axios.delete(`${BASE_URL}deleteExpense/${id}`)
+        getExpense()
+    }
+
+    const totalExpense = () => {
+        let totalIncome = 0;
+        expense.forEach((income) => {
+            totalIncome = totalIncome += income.amount
+        })
+        return totalIncome;
+    }
+
+    totalExpense();
 
     return (
         <GlobalContext.Provider value={{
             addIncome,
             getIncome,
-            income
+            income,
+            deleteIncome,
+            totalIncome,
+            expense,
+            addExpense,
+            getExpense,
+            deleteExpense,
+            totalExpense
         }}>
             {children}
         </GlobalContext.Provider>
